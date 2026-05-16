@@ -1,5 +1,7 @@
 # Sense of Arrival — Rosewood Sand Hill
 
+![Sense of Arrival dashboard — Rosewood Sand Hill](docs/dashboard.png)
+
 A hackathon MVP demonstrating **autonomous arrival orchestration** for Rosewood
 Hotels. Not a staff copilot — an automated system. The front desk sees what
 the system is doing and can intervene; the default mode is automation.
