@@ -1,12 +1,13 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { FastForward, RotateCcw } from 'lucide-react';
+import { FastForward, RotateCcw, Info } from 'lucide-react';
 import type { AppState, OverrideReason } from '../types';
 import ArrivalCard from './ArrivalCard';
 import ArrivalDetail from './ArrivalDetail';
 import OwnerMetrics from './OwnerMetrics';
 import ContextLearning from './ContextLearning';
 import OverrideModal from './OverrideModal';
+import AboutModal from './AboutModal';
 import { localTimeLabel } from '../lib/simulation';
 
 interface Props {
@@ -83,6 +84,8 @@ export default function Dashboard({
     onAdvance,
   ]);
 
+  const [aboutOpen, setAboutOpen] = useState(false);
+
   const modalGuest = state.overrideModalGuestId
     ? state.guests.find((g) => g.id === state.overrideModalGuestId) ?? null
     : null;
@@ -127,6 +130,14 @@ export default function Dashboard({
             <RotateCcw className="size-3" />
             Reset
           </button>
+          <button
+            onClick={() => setAboutOpen(true)}
+            className="inline-flex items-center gap-2 border border-hairline hover:border-accent/40 hover:bg-surface-2 px-2.5 py-1.5 rounded-md text-[11px] tracking-[0.12em] uppercase text-muted hover:text-text transition-colors"
+            aria-label="About this demo"
+          >
+            <Info className="size-3" />
+            About
+          </button>
         </div>
       </header>
 
@@ -167,6 +178,16 @@ export default function Dashboard({
         </div>
       </main>
 
+      <footer className="shrink-0 border-t border-hairline px-6 py-1.5 text-[10px] text-muted/80 flex items-center justify-between gap-4">
+        <span className="truncate">
+          Atop OPERA · Hapi · Salesforce · Cendyn · Canary AI · Adobe —
+          pre-arrival orchestration layer (T-2h → T-0).
+        </span>
+        <span className="shrink-0 italic">
+          Personalization as choreography, not memory.
+        </span>
+      </footer>
+
       <OverrideModal
         guestName={modalGuest?.name ?? null}
         open={modalGuest !== null}
@@ -175,6 +196,8 @@ export default function Dashboard({
           modalGuest && onSubmitOverride(modalGuest.id, reason)
         }
       />
+
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </div>
   );
 }

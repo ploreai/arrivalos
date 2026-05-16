@@ -73,23 +73,48 @@ The guest cards, the bandit weights, and the metrics are all seed data living
 in `src/data/`. The rule-based helpers in `src/lib/` (`meal`, `circadian`,
 `nps`, `bandit`, `simulation`) stand in for what would be real services.
 
-## What becomes real later
+## What becomes real later (mapped to Rosewood's actual stack)
 
-| Mock | Real integration |
+| Mock in this demo | Real Rosewood integration surface |
 | --- | --- |
-| Flight status | Amadeus / FlightAware / Cirium |
-| Room state, occupancy | Opera Cloud PMS |
-| Guest history, preferences | Salesforce / native Rosewood CRM |
-| Weather | OpenWeather or in-house feed |
-| Local events | Curated events feed (PredictHQ + editorial) |
-| NPS forecaster | Internal model trained on stay-level NPS + arrival signals |
-| Contextual bandit | Vowpal Wabbit / Sagemaker / in-house service |
-| Room controls | Honeywell INNcontrol or equivalent IoT control plane |
+| Room state, occupancy, stay history | **Oracle OPERA** via **OHIP** or via **Hapi** event streams |
+| Guest 360 / preferences / segments | **Salesforce** (Sales / Service / Marketing Cloud), fed by **Hapi** on AWS |
+| Loyalty + marketing automation | **Cendyn** (and Cendyn eInsight) |
+| Reservations / distribution | **Sabre Hospitality (SynXis)** |
+| In-stay messaging, AI Voice, AI Webchat, check-in | **Canary Technologies** *(already deployed at Rosewood)* |
+| Marketing analytics & DSP | **Adobe Analytics**, **Sojern**, **Triptease**, **Xandr**, **Microsoft Clarity** |
+| Consent / privacy | **OneTrust** |
+| Flight data | Cirium / FlightAware / Amadeus |
+| Cloud (partner-mediated) | **AWS** (via Hapi) |
+| Local events feed | Curated editorial + PredictHQ |
+| NPS forecaster | Internal stay-level model trained on Salesforce + OPERA signals |
+| Contextual bandit | In-house orchestration service (Vowpal Wabbit / SageMaker class) |
+| Room controls | Property-level IoT control plane |
+
+## Where this sits in the stack (not a Canary replacement)
+
+Rosewood already deploys **Canary Technologies** for in-stay engagement — check-in,
+guest messaging, AI Voice, AI Webchat, digital tipping, upsells. Canary owns the
+**T-0 onwards** experience.
+
+**Sense of Arrival is the pre-arrival orchestration layer** (T-2h → T-0) that sits
+*upstream* of Canary. It reads flight, meal, circadian, occupancy, local-context,
+CRM-preference, and prior-stay signals from OPERA / Hapi / Salesforce / Cendyn,
+infers guest need-state, and fires room IoT, F&B, and itinerary actions
+automatically — *before* the guest is in messaging range of Canary.
+
+```
+OPERA  ─┐                                             ┌─→  Room IoT (HVAC, lighting, scent)
+        │                                             │
+Sabre   ├─→  Hapi (AWS)  ─→  Salesforce / Cendyn  ─→  Sense of Arrival  ─→  F&B + itinerary prep
+        │                                             │
+CRM     ─┘     curated events · Cirium · weather  ─→  └─→  Canary (T-0 onward)
+```
 
 ## Brand language
 
-Sense of Place · arrival choreography · PMS · CRM · RevPAR · ADR · ancillary
-revenue · NPS · Affluential Explorers · local context · autonomous
-orchestration.
+Sense of Place · arrival choreography · Rosewood Moments · Asaya · Carlyle & Co. ·
+PMS · CRM · RevPAR · ADR · ancillary revenue · NPS · Affluential Explorers ·
+local context · autonomous orchestration.
 
 Personalization as choreography, not memory.

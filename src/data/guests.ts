@@ -25,7 +25,7 @@ export const seedGuests: Guest[] = [
       'Room set to 20.5°C · low light · no scent',
       'Arrival path: direct-to-room (lobby bypass)',
       'Amenity: local night tea + light savory plate',
-      'Itinerary: ceramics curator visit moved to tomorrow 10:30 AM',
+      'Rosewood Moments: ceramics curator visit moved to tomorrow 10:30 AM',
       'Room display: gentle timezone-reset guidance',
     ],
     roomDisplayCopy:
@@ -85,7 +85,7 @@ export const seedGuests: Guest[] = [
       'Terrace ritual prepared: chilled sake, anniversary card on plate',
       'Room lighting warm 2700K · scent: light osmanthus',
       'Late checkout held to 2 PM tomorrow',
-      'Couples spa block reserved for tomorrow 11 AM (cancel-friendly)',
+      'Asaya couples spa block reserved for tomorrow 11 AM (cancel-friendly)',
       'Companion arrival cross-linked to same key folio',
     ],
     roomDisplayCopy:
@@ -172,9 +172,9 @@ export const seedGuests: Guest[] = [
     localContext: 'Stanford GSB Founders Forum · gallery district active',
     priorPreference: 'New profile · derived from CRM art-signals',
     automatedActions: [
-      'Lobby art-alcove arrival path (slow walk, curator brief)',
+      'Rosewood Moments: lobby art-alcove arrival path (curator brief)',
       'Curator briefing card pre-loaded for the room',
-      'Gallery district map with three personalized stops',
+      'Rosewood Moments: gallery district map, three personalized stops',
       'Welcome amenity: signature local ceramic teaware',
       'Light savory plate (offsets long-haul meal gap)',
     ],
@@ -235,7 +235,7 @@ export const seedGuests: Guest[] = [
       'Suite pre-cooled to 21°C, blackout curtains drawn',
       'Light supper plate held in room, no contact required',
       'No housekeeping pass before 11 AM tomorrow',
-      'Spa block held for tomorrow 2 PM (cancel-friendly)',
+      'Asaya spa block held for tomorrow 2 PM (cancel-friendly)',
       'Wake lighting disabled for tomorrow',
     ],
     roomDisplayCopy:
@@ -264,7 +264,7 @@ export const seedGuests: Guest[] = [
     automatedActions: [
       'Suite upgrade absorbed: valley view + private terrace',
       'Champagne + Italian pastries on arrival cart',
-      'In-room couples massage offered for tomorrow',
+      'Asaya in-room couples treatment offered for tomorrow',
       'Honeymoon card handwritten by manager',
       'Late checkout held to 3 PM',
     ],
@@ -307,10 +307,10 @@ export const seedGuests: Guest[] = [
     etaMinutes: 156,
     needs: ['status'],
     needLabel: 'Status',
-    guestType: 'Top-decile global LTV · Private banking client',
-    triggerShort: 'Top-10 LTV globally · high occupancy · owner-tier service',
+    guestType: 'Top-decile global LTV · Carlyle & Co. member · Private banking',
+    triggerShort: 'Top-10 LTV globally · Carlyle & Co. member · owner-tier',
     triggerLong:
-      'Top 10 lifetime value across the Rosewood global portfolio. Owner has personal interest. Whisky pattern documented.',
+      'Top 10 lifetime value across the Rosewood global portfolio. Carlyle & Co. member (London). Owner has personal interest. Whisky pattern documented.',
     forecastNpsBefore: 78,
     forecastNpsAfter: 91,
     flight: 'LHR → SFO · BA 31',
@@ -326,6 +326,7 @@ export const seedGuests: Guest[] = [
       'GM to greet at arrival entrance personally',
       'Redwood terrace prepared with single-cask service',
       'Bespoke whisky tasting curated for tomorrow evening',
+      'Carlyle & Co. private dining held for tomorrow night',
       'Direct line to GM held for the duration of stay',
     ],
     roomDisplayCopy:
@@ -385,9 +386,9 @@ export const seedGuests: Guest[] = [
     localContext: 'Stanford GSB Founders Forum · SFMOMA Tuesday preview window',
     priorPreference: 'Private gallery viewings, ceramics, no music',
     automatedActions: [
-      'Lobby alcove private preview scheduled before check-in',
+      'Rosewood Moments: lobby alcove private preview before check-in',
       'Ceramics curator briefing on desk',
-      'Transport to SFMOMA booked for tomorrow 11 AM',
+      'Rosewood Moments: SFMOMA transport booked for tomorrow 11 AM',
       'Welcome amenity: signature California artisan ceramics',
       'No in-room scent · no ambient music',
     ],
@@ -443,13 +444,13 @@ export const seedGuests: Guest[] = [
     mealConfidence: 'Medium',
     circadianState: 'unstable',
     bodyClockEquivalent: '9:12 AM',
-    localContext: 'Spa floor available · medical concierge confirmed',
-    priorPreference: 'Spa floor, gentle scent, medical concierge contact',
+    localContext: 'Asaya spa floor available · medical concierge confirmed',
+    priorPreference: 'Asaya spa floor, gentle scent, medical concierge contact',
     automatedActions: [
-      'Spa-floor suite confirmed, gentle scent ready',
+      'Asaya spa-floor suite confirmed, gentle scent ready',
       'Medical concierge direct line in room',
       'Recovery menu pre-loaded (low-sodium, broth-forward)',
-      'Spa block held for tomorrow afternoon (gentle treatments)',
+      'Asaya spa block held for tomorrow afternoon (gentle treatments)',
       'No housekeeping pass before 11 AM',
     ],
     roomDisplayCopy:
@@ -508,7 +509,7 @@ export const seedGuests: Guest[] = [
     priorPreference: 'Connecting suites, jazz, in-room flowers',
     automatedActions: [
       'Connecting suites confirmed for the four arrivals',
-      'Birthday tasting menu booked tomorrow at The Henry',
+      'Rosewood Moments: birthday tasting menu booked tomorrow at Madera',
       'In-room flowers and milestone card in primary suite',
       'Jazz playlist queued on arrival',
       'Party arrivals cross-linked to single folio',
