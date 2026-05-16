@@ -1,4 +1,4 @@
-# Sense of Arrival — Rosewood Hong Kong
+# Sense of Arrival — Rosewood Sand Hill
 
 A hackathon MVP demonstrating **autonomous arrival orchestration** for Rosewood
 Hotels. Not a staff copilot — an automated system. The front desk sees what
@@ -33,10 +33,11 @@ TypeScript check: `npm run typecheck`. Production build: `npm run build`.
    Today vs trailing 7-day deltas in green/red. Upgrades are not eliminated;
    they are allocated where they protect relationship value.
 
-4. **Context + Learning** — Three columns: a local context radar (Art Week,
-   weather, flight disruption clusters, occupancy, nearby conferences); a
-   contextual-bandit view of which arrival package is currently winning
-   reward; and the intervention log that records every front-desk override.
+4. **Context + Learning** — Two columns plus a button: a local context radar
+   (Founders Forum, weather, flight disruption clusters, occupancy, nearby
+   VC offsite); a contextual-bandit view of which arrival package is currently
+   winning reward; and an **Interventions · N** button that opens the override
+   log.
 
 ## Simulation
 
@@ -65,7 +66,7 @@ Everything. None of these are real:
 - Flight status, meal timing, circadian state
 - PMS room state, occupancy, displacement cost
 - CRM guest preferences, anniversary history
-- Local context signals (Art Week, weather, conferences)
+- Local context signals (Founders Forum, weather, VC offsite)
 - The contextual bandit, the NPS forecaster, the upgrade ROI model
 
 The guest cards, the bandit weights, and the metrics are all seed data living

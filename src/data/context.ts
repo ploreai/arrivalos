@@ -2,19 +2,19 @@ import type { BanditWeight, ContextSignal, OwnerMetrics } from '../types';
 
 export const seedContext: ContextSignal[] = [
   {
-    id: 'art-week',
-    label: 'Hong Kong Art Week',
-    detail: 'Detected via local events feed · 6 day window',
+    id: 'founders-forum',
+    label: 'Stanford GSB Founders Forum',
+    detail: 'Detected via local events feed · 4-day window',
   },
   {
-    id: 'rain',
-    label: 'Rain forecast at 6 PM',
-    detail: '11mm expected · arrival paths re-routed under cover',
+    id: 'fog',
+    label: 'Marine layer rolling in 7 PM',
+    detail: 'Arrival paths shifted under cover · valet windows widened',
   },
   {
     id: 'flight-cluster',
     label: 'Flight disruption cluster',
-    detail: '3 long-haul arrivals delayed 90m+ in next 4h',
+    detail: '3 long-haul arrivals delayed 90m+ in next 4h at SFO',
   },
   {
     id: 'occupancy',
@@ -22,9 +22,9 @@ export const seedContext: ContextSignal[] = [
     detail: 'Upgrade ROI threshold raised · suite displacement $640 avg',
   },
   {
-    id: 'corp-conf',
-    label: 'Corporate conference nearby',
-    detail: 'Pacific Place · 1.2km · 600 attendees · ends 6 PM',
+    id: 'vc-offsite',
+    label: 'VC partner offsite on property',
+    detail: 'Sand Hill Road · 80 partners · ends 9 PM',
   },
 ];
 

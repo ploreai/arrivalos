@@ -21,3 +21,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
+# Claude Code worktree-local state
+.claude/

@@ -4,7 +4,8 @@ export type NeedState =
   | 'work'
   | 'celebrate'
   | 'family'
-  | 'status';
+  | 'status'
+  | 'irate';
 
 export type CircadianState = 'stable' | 'mild' | 'unstable';
 export type MealConfidence = 'High' | 'Medium' | 'Low';
@@ -53,6 +54,7 @@ export interface Guest {
   roomDisplayCopy: string;
   override?: OverrideReason;
   actualNps?: number;
+  arrivedAtOffset?: number;
 }
 
 export interface ContextSignal {

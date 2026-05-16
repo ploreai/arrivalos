@@ -7,6 +7,7 @@ const NEED_LABEL: Record<NeedState, string> = {
   celebrate: 'Celebrate',
   family: 'Family',
   status: 'Status',
+  irate: 'Irate · Recovery',
 };
 
 const NEED_DOT: Record<NeedState, string> = {
@@ -16,6 +17,7 @@ const NEED_DOT: Record<NeedState, string> = {
   celebrate: 'bg-need-celebrate',
   family: 'bg-need-family',
   status: 'bg-need-status',
+  irate: 'bg-need-irate',
 };
 
 interface Props {

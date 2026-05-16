@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Clock, Sparkles } from 'lucide-react';
+import { Clock, Sparkles, AlertTriangle } from 'lucide-react';
 import type { Guest } from '../types';
 import NeedBadge from './NeedBadge';
 
@@ -26,52 +26,66 @@ export default function ArrivalCard({
   onSelect,
   onOverride,
 }: Props) {
+  const isIrate = guest.needs.includes('irate');
   return (
     <motion.button
       layout
       onClick={onSelect}
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.28, ease: 'easeOut' }}
-      className={`relative w-full text-left rounded-lg border bg-surface px-5 py-4 transition-colors ${
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.26, ease: 'easeOut' }}
+      className={`relative w-full min-h-0 text-left rounded-lg border bg-surface px-4 py-2.5 transition-colors flex flex-col justify-between ${
         selected
           ? 'border-accent/40 bg-surface-2'
-          : 'border-hairline hover:bg-surface-2/60'
+          : isIrate
+            ? 'border-need-irate/40 hover:bg-surface-2/60'
+            : 'border-hairline hover:bg-surface-2/60'
       }`}
     >
       {selected && (
         <motion.span
           layoutId="card-rail"
-          className="absolute left-0 top-3 bottom-3 w-px bg-accent"
+          className={`absolute left-0 top-2 bottom-2 w-px ${
+            isIrate ? 'bg-need-irate irate-rail' : 'bg-accent'
+          }`}
         />
       )}
-      <div className="flex items-start justify-between gap-4">
+      {!selected && isIrate && (
+        <span className="absolute left-0 top-2 bottom-2 w-px bg-need-irate irate-rail" />
+      )}
+
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="flex items-center gap-3">
-            <h3 className="text-[17px] font-light tracking-tight text-text truncate">
+          <div className="flex items-center gap-2.5">
+            {isIrate && (
+              <AlertTriangle className="size-3.5 text-need-irate shrink-0" />
+            )}
+            <h3 className="text-[15px] font-light tracking-tight text-text truncate">
               {guest.name}
             </h3>
             <NeedBadge needs={guest.needs} />
           </div>
-          <p className="mt-1 text-[12px] text-muted">{guest.guestType}</p>
+          <p className="mt-0.5 text-[11px] text-muted truncate">
+            {guest.guestType}
+          </p>
         </div>
         <div className="shrink-0 text-right">
           {arrived ? (
             <>
-              <div className="text-[10px] tracking-[0.18em] uppercase text-muted">
+              <div className="text-[9px] tracking-[0.18em] uppercase text-muted">
                 Arrived · Actual NPS
               </div>
-              <div className="tnum text-3xl font-extralight text-accent">
+              <div className="tnum text-2xl font-extralight text-accent leading-none mt-0.5">
                 {guest.actualNps}
               </div>
             </>
           ) : (
             <>
-              <div className="text-[10px] tracking-[0.18em] uppercase text-muted">
+              <div className="text-[9px] tracking-[0.18em] uppercase text-muted">
                 ETA
               </div>
-              <div className="tnum text-2xl font-extralight text-text">
+              <div className="tnum text-xl font-extralight text-text leading-none mt-0.5">
                 {formatEta(guest.etaMinutes)}
               </div>
             </>
@@ -79,37 +93,38 @@ export default function ArrivalCard({
         </div>
       </div>
 
-      <div className="mt-3 flex items-start gap-2 text-[12.5px] text-text/85">
-        <Clock className="size-3.5 mt-[3px] shrink-0 text-muted" />
-        <span>{guest.triggerShort}</span>
+      <div className="mt-2 flex items-start gap-2 text-[12px] text-text/85">
+        <Clock className="size-3 mt-[3px] shrink-0 text-muted" />
+        <span className="truncate">{guest.triggerShort}</span>
       </div>
 
-      <div className="mt-3 flex items-start gap-2 text-[12.5px] text-text/85">
-        <Sparkles className="size-3.5 mt-[3px] shrink-0 text-accent" />
-        <span className="line-clamp-2">{guest.automatedActions[0]}</span>
+      <div className="mt-1 flex items-start gap-2 text-[12px] text-text/85">
+        <Sparkles
+          className={`size-3 mt-[3px] shrink-0 ${
+            isIrate ? 'text-need-irate' : 'text-accent'
+          }`}
+        />
+        <span className="line-clamp-1">{guest.automatedActions[0]}</span>
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <div className="text-[11px] text-muted">
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <div className="text-[10px] text-muted">
           Forecast NPS{' '}
           <span className="tnum text-text">{guest.forecastNpsAfter}</span>
-          <span className="text-muted/70">
-            {' '}
-            (was {guest.forecastNpsBefore})
-          </span>
+          <span className="text-muted/70"> (was {guest.forecastNpsBefore})</span>
         </div>
         {guest.override ? (
-          <span className="text-[11px] text-accent/90 tracking-[0.12em] uppercase">
+          <span className="text-[10px] text-accent/90 tracking-[0.12em] uppercase truncate max-w-[60%]">
             Override · {guest.override}
           </span>
         ) : arrived ? (
-          <span className="text-[11px] text-pos tracking-[0.12em] uppercase">
+          <span className="text-[10px] text-pos tracking-[0.12em] uppercase">
             Choreography complete
           </span>
         ) : (
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] text-muted tracking-[0.12em] uppercase">
-              Automation running
+          <div className="flex items-center gap-2.5">
+            <span className="text-[10px] text-muted tracking-[0.12em] uppercase">
+              {isIrate ? 'Recovery armed' : 'Automation running'}
             </span>
             <span
               role="button"
@@ -125,7 +140,7 @@ export default function ArrivalCard({
                   onOverride();
                 }
               }}
-              className="cursor-pointer text-[11px] tracking-[0.12em] uppercase border border-hairline rounded px-2 py-1 hover:bg-surface-2 hover:border-accent/30 text-text/85"
+              className="cursor-pointer text-[10px] tracking-[0.12em] uppercase border border-hairline rounded px-2 py-0.5 hover:bg-surface-2 hover:border-accent/30 text-text/85"
             >
               Override
             </span>

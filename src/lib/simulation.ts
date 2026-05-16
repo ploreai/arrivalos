@@ -12,7 +12,7 @@ export function localTimeLabel(offset: number): string {
   const total = (BASE_LOCAL_MINUTES + offset) % (24 * 60);
   const h = Math.floor(total / 60);
   const m = total % 60;
-  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} HKT`;
+  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} PT`;
 }
 
 function jitter(seed: number, key: string, range: number): number {
@@ -37,7 +37,7 @@ export function advance(state: AppState, minutes: number): AppState {
           Math.round(g.forecastNpsAfter + jitter(nextOffset, g.id, 4)),
         ),
       );
-      return { ...g, etaMinutes: 0, actualNps };
+      return { ...g, etaMinutes: 0, actualNps, arrivedAtOffset: nextOffset };
     }
     return { ...g, etaMinutes: Math.max(0, nextEta) };
   });
@@ -53,7 +53,30 @@ export function advance(state: AppState, minutes: number): AppState {
 
   const arrivedIds = [...state.arrivedIds, ...newlyArrived];
 
-  const arrivedGuests = updatedGuests.filter((g) => arrivedIds.includes(g.id));
+  const pendingMaxEta = updatedGuests
+    .filter((g) => !arrivedIds.includes(g.id))
+    .reduce((m, g) => Math.max(m, g.etaMinutes), 0);
+
+  let respawnCursor = Math.max(pendingMaxEta, 15);
+  const respawns: Guest[] = [];
+  for (const arrivedId of newlyArrived) {
+    const original = updatedGuests.find((g) => g.id === arrivedId);
+    if (!original) continue;
+    const baseId = original.id.replace(/-r\d+-\d+$/, '');
+    respawnCursor += 11 + Math.floor(jitter(nextOffset, baseId, 5) + 3);
+    respawns.push({
+      ...original,
+      id: `${baseId}-r${nextOffset}-${respawns.length}`,
+      etaMinutes: respawnCursor,
+      actualNps: undefined,
+      override: undefined,
+      arrivedAtOffset: undefined,
+    });
+  }
+
+  const finalGuests = [...updatedGuests, ...respawns];
+
+  const arrivedGuests = finalGuests.filter((g) => arrivedIds.includes(g.id));
   const meanActual =
     arrivedGuests.length > 0
       ? arrivedGuests.reduce((s, g) => s + (g.actualNps ?? 0), 0) /
@@ -85,7 +108,7 @@ export function advance(state: AppState, minutes: number): AppState {
   return {
     ...state,
     clockMinutesOffset: nextOffset,
-    guests: updatedGuests,
+    guests: finalGuests,
     arrivedIds,
     metrics,
     bandit,

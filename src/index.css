@@ -17,9 +17,18 @@
   --color-need-celebrate: #C9A875;
   --color-need-family: #D08770;
   --color-need-status: #B85C5C;
+  --color-need-irate: #C9442E;
 
   --color-pos: #7FB082;
   --color-neg: #C26B6B;
+}
+
+@keyframes irate-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+.irate-rail {
+  animation: irate-pulse 1.6s ease-in-out infinite;
 }
 
 html, body, #root {

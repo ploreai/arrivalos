@@ -31,10 +31,14 @@ export default function Dashboard({
   const visibleGuests = useMemo(
     () =>
       [...state.guests]
-        .filter((g) => !state.arrivedIds.includes(g.id) || g.etaMinutes === 0)
+        .filter(
+          (g) =>
+            !state.arrivedIds.includes(g.id) ||
+            g.arrivedAtOffset === state.clockMinutesOffset,
+        )
         .sort((a, b) => a.etaMinutes - b.etaMinutes)
         .slice(0, 4),
-    [state.guests, state.arrivedIds],
+    [state.guests, state.arrivedIds, state.clockMinutesOffset],
   );
 
   const selectedGuest = useMemo(
@@ -84,49 +88,51 @@ export default function Dashboard({
     : null;
 
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <header className="border-b border-hairline px-8 py-5 flex items-start justify-between gap-8">
-        <div>
-          <p className="text-[10px] tracking-[0.32em] uppercase text-muted">
+    <div className="h-screen overflow-hidden bg-bg text-text flex flex-col">
+      <header className="shrink-0 border-b border-hairline px-6 py-3 flex items-center justify-between gap-6">
+        <div className="min-w-0">
+          <p className="text-[9px] tracking-[0.32em] uppercase text-muted">
             Sense of Arrival
           </p>
-          <h1 className="text-[22px] font-extralight tracking-tight mt-1">
-            Rosewood Hong Kong
-          </h1>
-          <p className="text-[12px] text-muted italic mt-1.5">
-            The guest has not arrived yet, but the hotel has already changed.
-          </p>
+          <div className="flex items-baseline gap-3 mt-0.5">
+            <h1 className="text-[18px] font-extralight tracking-tight">
+              Rosewood Sand Hill
+            </h1>
+            <p className="text-[11px] text-muted italic truncate">
+              The guest has not arrived yet, but the hotel has already changed.
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <div className="text-right">
-            <p className="text-[10px] tracking-[0.2em] uppercase text-muted">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-muted">
               Local time
             </p>
-            <p className="tnum text-lg font-light mt-0.5">
+            <p className="tnum text-[15px] font-light leading-tight">
               {localTimeLabel(state.clockMinutesOffset)}
             </p>
           </div>
           <button
             onClick={onAdvance}
-            className="inline-flex items-center gap-2 border border-hairline hover:border-accent/40 hover:bg-surface-2 px-4 py-2 rounded-md text-[12px] tracking-[0.12em] uppercase text-text/90 transition-colors"
+            className="inline-flex items-center gap-2 border border-hairline hover:border-accent/40 hover:bg-surface-2 px-3 py-1.5 rounded-md text-[11px] tracking-[0.12em] uppercase text-text/90 transition-colors"
           >
-            <FastForward className="size-3.5" />
+            <FastForward className="size-3" />
             Advance 15 min
           </button>
           <button
             onClick={onReset}
-            className="inline-flex items-center gap-2 border border-hairline hover:border-accent/40 hover:bg-surface-2 px-3 py-2 rounded-md text-[12px] tracking-[0.12em] uppercase text-muted hover:text-text transition-colors"
+            className="inline-flex items-center gap-2 border border-hairline hover:border-accent/40 hover:bg-surface-2 px-2.5 py-1.5 rounded-md text-[11px] tracking-[0.12em] uppercase text-muted hover:text-text transition-colors"
             aria-label="Reset demo"
           >
-            <RotateCcw className="size-3.5" />
+            <RotateCcw className="size-3" />
             Reset
           </button>
         </div>
       </header>
 
-      <main className="px-8 py-6 grid grid-cols-1 xl:grid-cols-12 gap-5">
-        <section className="xl:col-span-7 rounded-lg border border-hairline bg-surface px-6 py-5">
-          <div className="flex items-baseline justify-between mb-4">
+      <main className="flex-1 min-h-0 grid grid-cols-12 gap-3 p-3">
+        <section className="col-span-7 min-h-0 flex flex-col rounded-lg border border-hairline bg-surface">
+          <div className="shrink-0 flex items-baseline justify-between px-5 pt-3 pb-2">
             <p className="text-[10px] tracking-[0.22em] uppercase text-muted">
               Next Four Arrivals
             </p>
@@ -134,7 +140,7 @@ export default function Dashboard({
               {state.arrivedIds.length} arrived today
             </p>
           </div>
-          <div className="space-y-3">
+          <div className="flex-1 min-h-0 px-3 pb-3 grid grid-rows-4 gap-2">
             <AnimatePresence initial={false}>
               {visibleGuests.map((g) => (
                 <ArrivalCard
@@ -150,7 +156,7 @@ export default function Dashboard({
           </div>
         </section>
 
-        <div className="xl:col-span-5 flex flex-col gap-5">
+        <div className="col-span-5 min-h-0 grid grid-rows-[minmax(0,1fr)_auto_auto] gap-3">
           <ArrivalDetail guest={selectedGuest} />
           <OwnerMetrics metrics={state.metrics} />
           <ContextLearning
